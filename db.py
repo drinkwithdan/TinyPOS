@@ -5,7 +5,6 @@ import os
 
 
 def get_db():
-    print(os.environ.get("DB_HOST"))
     if 'db' not in g:
         connection = psycopg2.connect(
             host=os.environ.get('DB_HOST'),

@@ -15,7 +15,7 @@ const Cart = ({ cart, removeFromCart }) => {
           removeFromCart={removeFromCart} 
         /> : <h3>There's nothing in your cart</h3>
       }
-      <Link to="/" className="goto-home-button" >
+      <Link to="/home" className="goto-home-button" >
         BACK TO HOME
       </Link>
       <Footer />

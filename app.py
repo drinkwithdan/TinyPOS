@@ -32,5 +32,39 @@ def get_items():
   """
   g.db["cursor"].execute(query)
   items = g.db["cursor"].fetchall()
-  print(items)
   return jsonify(items)
+
+@app.route("/items/new", methods=["POST"])
+def new_item():
+  name = request.json["name"]
+  description = request.json["description"]
+  imageURL = request.json["imageURL"]
+  price = request.json["price"]
+  active = request.json["active"]
+  query = """
+    INSERT INTO items
+    (name, description, imageURL, price, active)
+    VALUES (%s, %s, %s, %s, %s)
+    RETURNING *
+  """
+  g.db["cursor"].execute(query, (name, description, imageURL, price, active))
+  g.db["connection"].commit()
+  new_item = g.db["cursor"].fetchone()
+  return jsonify(new_item)
+
+# TO-DO: finish Edit and Delete Routes
+@app.route("/items/edit/<id>", methods=["PUT"])
+def edit_item(id):
+  name = request.json["name"]
+  description = request.json["description"]
+  imageurl = request.json["imageurl"]
+  price = request.json["price"]
+  active = request.json["active"]
+  item_id = request.json['item_id']
+  query = """
+    UPDATE items
+    SET (name, description, imageurl, price, active)
+    WHERE item_id =
+  """
+
+

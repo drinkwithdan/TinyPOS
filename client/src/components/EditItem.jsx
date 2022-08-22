@@ -2,17 +2,16 @@ import { useState } from "react"
 import { useParams } from "react-router-dom"
 import { FormControl, FormGroup, InputLabel, Input, Checkbox, Button } from "@mui/material"
 
-const EditItem = ({ products }) => {
-  const [fields, setFields] = useState({})
+const EditItem = ({ products, handleEdit }) => {
   const params = useParams()
-
   // Find item to edit from params
   const item = products.find((product) => product.item_id == params.id)
 
+  const [fields, setFields] = useState({...item})
+
   const handleSubmit = (event) => {
     event.preventDefault()
-    console.log(fields);
-    // handleNewItemSubmit(fields)
+    handleEdit(fields)
   }
 
   const handleChange = (event) => {
@@ -35,7 +34,7 @@ const EditItem = ({ products }) => {
             id="name"
             required
             onChange={handleChange}
-            value={item.name}
+            value={fields.name}
           />
         </FormControl>
         <FormControl fullWidth sx={{ margin: "5px" }} >
@@ -44,16 +43,16 @@ const EditItem = ({ products }) => {
             id="description"
             required
             onChange={handleChange}
-            value={item.description}
+            value={fields.description}
           />
         </FormControl>
         <FormControl fullWidth sx={{ margin: "5px" }} >
           <InputLabel>Image URL</InputLabel>
           <Input
-            id="imageURL"
+            id="imageurl"
             required
             onChange={handleChange}
-            value={item.imageURL}
+            value={fields.imageurl}
           />
         </FormControl>
         <FormControl fullWidth sx={{ margin: "5px" }} >
@@ -63,7 +62,7 @@ const EditItem = ({ products }) => {
             type="number"
             required
             onChange={handleChange}
-            value={item.price}
+            value={fields.price}
           />
         </FormControl>
         <FormControl fullWidth sx={{ margin: "5px" }} >
@@ -71,7 +70,7 @@ const EditItem = ({ products }) => {
           <Checkbox
             id="active"
             onChange={handleChange}
-            defaultChecked={item.active}
+            defaultChecked={fields.active}
           />
         </FormControl>
         <Button type="submit" >Submit</Button>

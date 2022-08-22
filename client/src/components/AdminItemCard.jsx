@@ -11,7 +11,7 @@ const AdminItemCard = ({ item, handleDelete }) => {
     <div className="card-item">
 
       <div className="card-image">
-        <img src={item.imageURL} className="card-image-item" alt="Picture of item" />
+        <img src={item.imageurl} className="card-image-item" alt="Picture of item" />
       </div>
 
       <div className="card-body">

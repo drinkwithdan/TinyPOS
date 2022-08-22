@@ -35,7 +35,7 @@ const ItemCard = ({ item, cart, addToCart }) => {
     <div className="card-item">
 
       <div className="card-image">
-        <img src={item.imageURL} className="card-image-item" alt="Picture of item" />
+        <img src={item.imageurl} className="card-image-item" alt="Picture of item" />
       </div>
 
       <div className="card-body">
@@ -43,7 +43,7 @@ const ItemCard = ({ item, cart, addToCart }) => {
         <div className="card-title">
 
           <div>
-            {item.name} {numberInCart && <span id="cart-count">({numberInCart} in cart)</span>}
+            {item.name} {!!numberInCart && <span id="cart-count">({numberInCart} in cart)</span>}
           </div>
 
           <div>

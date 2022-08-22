@@ -35,10 +35,8 @@ const App = () => {
   useEffect(() => {
     const getProducts = async () => {
       const res = await fetch("/items")
-      console.log(res);
       const data = await res.json()
-      console.log(data);
-      // setProducts(data)
+      setProducts(data)
     }
     getProducts()
   }, [])
@@ -61,17 +59,35 @@ const App = () => {
     console.log(data);
   }
 
-  const handleNew = (newItem) => {
+  const handleNew = async (newItem) => {
     // TO-DO: create fetch and POST to database
-    newItem.id = uuid()
+    const res = await fetch("/items/new", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newItem)
+    })
+    const data = await res.json()
+    console.log(data);
     setProducts([
       ...products,
-      newItem
+      data
     ])
     navigate("/items")
   }
 
-  const handleEdit = (editedItem) => {
+  const handleEdit = async (editedItem) => {
+    const res = await fetch(`/items/edit/<${editedItem.item_id}>`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(editedItem)
+    })
+    const data = await res.json()
+    console.log(data);
+
     // TO-DO: Hook it up
     // setProducts([
     //   ...products.splice(0, index),
@@ -202,7 +218,7 @@ const App = () => {
 
         <Route path="/items/new" element={<NewItem handleNew={handleNew} />} />
 
-        <Route path="/items/edit/:id" element={products && <EditItem products={products} />} />
+        <Route path="/items/edit/:id" element={products && <EditItem products={products} handleEdit={handleEdit} />} />
 
         <Route path="/login" element={<Login handleLogin={handleLogin} />} />
 
