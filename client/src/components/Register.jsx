@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { FormControl, FormGroup, InputLabel, Input, Checkbox, Button } from "@mui/material"
 
-export const Register = () => {
+const Register = () => {
   const [fields, setFields] = useState()
 
   const handleChange = (event) => {
@@ -18,8 +18,9 @@ export const Register = () => {
 
   return (
     <div className="register-form">
+      <h1>Register:</h1>
       <form onSubmit={handleSubmit}>
-        <FormControl fullWidth sx={{ margin: "5px" }}>
+        <FormControl sx={{ margin: "5px", width: "80%" }}>
           <InputLabel>Username</InputLabel>
           <Input 
             id="username"
@@ -27,15 +28,19 @@ export const Register = () => {
             onChange={handleChange} 
           />
         </FormControl>
-        <FormControl fullWidth sx={{ margin: "5px" }}>
+        <FormControl sx={{ margin: "5px", width: "80%" }}>
           <InputLabel>Password</InputLabel>
           <Input 
             id="password"
+            type="password"
             required
             onChange={handleChange} 
           />
         </FormControl>
+        <Button type="submit">Submit</Button>
       </form>
     </div>
   )
 }
+
+export default Register

@@ -30,6 +30,8 @@ const AdminItemCard = ({ item, handleDelete }) => {
 
         <p>{item.description}</p>
 
+        <p>{item.active ? "Active" : "Not active"}</p>
+
         <div className="card-buttons-container">
 
           <Link to={`/items/edit/${item.item_id}`}>

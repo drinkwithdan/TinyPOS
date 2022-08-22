@@ -9,6 +9,7 @@ import Success from "./components/Success"
 import Orders from "./components/Orders"
 import NewItem from "./components/NewItem"
 import Login from "./components/Login"
+import Register from "./components/Register"
 import AdminItems from "./components/AdminItems"
 import itemsData from "./data/items-data";
 import EditItem from "./components/EditItem";
@@ -85,20 +86,28 @@ const App = () => {
       },
       body: JSON.stringify(editedItem)
     })
-    const data = await res.json()
-    console.log(data);
-
-    // TO-DO: Hook it up
-    // setProducts([
-    //   ...products.splice(0, index),
-    //   editedItem,
-    //   ...products.splice(index + 1)
-    // ])
+    const returnedItem = await res.json()
+    const index = products.indexOf(products.find((item) => item.item_id === editedItem.item_id))
+    setProducts([
+      ...products.splice(0, index),
+      returnedItem,
+      ...products.splice(index + 1)
+    ])
+    navigate("/items")
   }
 
-  const handleDelete = (itemToDelete) => {
-    // TO-DO; Hook it up
-    console.log("Delete", itemToDelete.name);
+  const handleDelete = async (itemToDelete) => {
+    console.log(itemToDelete.item_id);
+    const res = await fetch(`items/delete`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(itemToDelete)
+    })
+    const deletedItem = await res.json()
+    const newProducts = products.filter(item => item.item_id !== deletedItem.item_id)
+    setProducts(newProducts)
   }
 
   // Adds item to cart with the current counter quantity
@@ -220,7 +229,9 @@ const App = () => {
 
         <Route path="/items/edit/:id" element={products && <EditItem products={products} handleEdit={handleEdit} />} />
 
-        <Route path="/login" element={<Login handleLogin={handleLogin} />} />
+        <Route path="/users/register" element={<Register />} />
+
+        <Route path="/users/login" element={<Login handleLogin={handleLogin} />} />
 
         <Route path="/orders" element={orders && <Orders orders={orders} />} />
 

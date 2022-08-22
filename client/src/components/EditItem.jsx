@@ -70,7 +70,7 @@ const EditItem = ({ products, handleEdit }) => {
           <Checkbox
             id="active"
             onChange={handleChange}
-            defaultChecked={fields.active}
+            value={fields.active}
           />
         </FormControl>
         <Button type="submit" >Submit</Button>
