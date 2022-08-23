@@ -4,7 +4,9 @@ import ItemCard from "./ItemCard"
 
 const ItemList = ({products, cart, addToCart}) => {
 
-  const itemsList = products.map((item) => {
+  const activeItemsList = products.filter((item) => item.active === true)
+
+  const itemsList = activeItemsList.map((item) => {
     return <ItemCard 
       key={item.item_id} 
       item={item}

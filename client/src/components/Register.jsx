@@ -1,7 +1,9 @@
 import { useState } from "react"
+import { Link } from "react-router-dom"
 import { FormControl, FormGroup, InputLabel, Input, Checkbox, Button } from "@mui/material"
+import AdminNavbar from "./AdminNavbar"
 
-const Register = () => {
+const Register = ({ user, handleLogout, handleRegister }) => {
   const [fields, setFields] = useState()
 
   const handleChange = (event) => {
@@ -13,31 +15,42 @@ const Register = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    console.log(fields);
+    handleRegister(fields)
   }
 
   return (
-    <div className="register-form">
-      <h1>Register:</h1>
-      <form onSubmit={handleSubmit}>
+    <div className="form-container">
+      <AdminNavbar user={user} handleLogout={handleLogout} />
+      <form onSubmit={handleSubmit} className="form-container">
+        <h1>Register New User</h1>
         <FormControl sx={{ margin: "5px", width: "80%" }}>
           <InputLabel>Username</InputLabel>
-          <Input 
+          <Input
             id="username"
             required
-            onChange={handleChange} 
+            onChange={handleChange}
           />
         </FormControl>
         <FormControl sx={{ margin: "5px", width: "80%" }}>
           <InputLabel>Password</InputLabel>
-          <Input 
+          <Input
             id="password"
             type="password"
             required
-            onChange={handleChange} 
+            onChange={handleChange}
+          />
+        </FormControl>
+        <FormControl sx={{ margin: "5px", width: "80%" }}>
+          <InputLabel>Secret phrase</InputLabel>
+          <Input
+            id="secret"
+            type="password"
+            required
+            onChange={handleChange}
           />
         </FormControl>
         <Button type="submit">Submit</Button>
+        <p>Already have an account? Login <Link to="/users/login">here.</Link></p>
       </form>
     </div>
   )

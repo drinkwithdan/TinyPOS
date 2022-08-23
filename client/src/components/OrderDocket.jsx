@@ -11,12 +11,15 @@ export const OrderDocket = ({ order }) => {
             <h3>{order.name}</h3>
           </div>
           <div>
-            <h3>{new Date(order.timestamp).toLocaleDateString("en-AU")}</h3>
+            <h3>{new Date(order.timestamp).toLocaleString("en-US", { hour: "2-digit", minute: "2-digit" }, { timeZone: "Australia/Melbourne" })}</h3>
           </div>
         </div>
         <ul>
           {itemsList}
         </ul>
+        <div>
+          <button>ACCEPT</button>
+        </div>
       </div>
     </div>
   )

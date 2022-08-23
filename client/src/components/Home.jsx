@@ -2,6 +2,7 @@ import Navbar from './Navbar'
 import Header from './Header'
 import ItemList from './ItemList'
 import Footer from './Footer'
+import LoadingSpinner from './LoadingSpinner'
 
 
 const Home = ({ products, cart, addToCart }) => {
@@ -10,11 +11,11 @@ const Home = ({ products, cart, addToCart }) => {
     <div className="home">
       <Navbar cart={cart} />
       <Header />
-      {products && <ItemList 
+      {products ? <ItemList 
         products={products}
         cart={cart} 
         addToCart={addToCart} 
-      />}
+      /> : <LoadingSpinner />}
       <Footer />
     </div>
   )

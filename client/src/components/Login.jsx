@@ -1,7 +1,9 @@
 import { useState } from "react"
+import { Link } from "react-router-dom"
 import { FormControl, FormGroup, InputLabel, Input, Checkbox, Button } from "@mui/material"
+import AdminNavbar from "./AdminNavbar"
 
-const Login = ({ handleLogin }) => {
+const Login = ({ user, handleLogout, handleLogin }) => {
   const [fields, setFields] = useState()
 
   const handleChange = (event) => {
@@ -17,10 +19,11 @@ const Login = ({ handleLogin }) => {
   }
 
   return (
-    <div className="login-form">
+    <div className="form-container">
+    <AdminNavbar user={user} handleLogout={handleLogout} />
+      <form onSubmit={handleSubmit} className="form-container">
       <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <FormControl sx={{ margin: "5px", width: "100%" }}>
+        <FormControl sx={{ margin: "5px", width: "80%" }}>
           <InputLabel>Username</InputLabel>
           <Input 
             id="username"
@@ -28,7 +31,7 @@ const Login = ({ handleLogin }) => {
             onChange={handleChange} 
           />
         </FormControl>
-        <FormControl sx={{ margin: "5px", width:"100%" }}>
+        <FormControl sx={{ margin: "5px", width:"80%" }}>
           <InputLabel>Password</InputLabel>
           <Input 
             id="password"
@@ -38,7 +41,9 @@ const Login = ({ handleLogin }) => {
           />
         </FormControl>
         <Button type="submit">Submit</Button>
+        <p>No account? Register <Link to="/users/register">here.</Link></p>
       </form>
+      
     </div>
   )
 }

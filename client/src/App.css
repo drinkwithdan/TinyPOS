@@ -23,6 +23,13 @@ body {
   height: 100%;
 }
 
+.home {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .cart {
   height: 100%;
   display: flex;
@@ -51,7 +58,7 @@ body {
 }
 
 .navbar h1{
-  font-family: "Arbutus", "Proxima Nova", sans-serif;
+  font-family: "Proxima Nova", sans-serif;
   font-size: 25px;
 }
 
@@ -62,6 +69,64 @@ body {
   padding: 3px;
   align-items: center;
   justify-content: center;
+}
+
+.admin-navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color:bisque; 
+}
+
+.admin-navbar .left-icon {
+  display: flex;
+  width: 12vw;
+  height: 12vw;
+  padding: 3px;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-navbar h1{
+  font-family: "Proxima Nova", sans-serif;
+  font-size: 25px;
+}
+
+.admin-navbar .right-icon {
+  display: flex;
+  width: 12vw;
+  height: 12vw;
+  padding: 3px;
+  align-items: center;
+  justify-content: center;
+}
+
+.logout-button {
+  display: flex;
+  border: 1px solid darkred;
+  background: none;
+  border-radius: 3px;
+  color: darkred;
+  font-family: inherit;
+  font-size: 15px;
+  text-decoration: none;
+  align-items: center;
+  padding: 3px;
+}
+
+.login-button {
+  display: flex;
+  border: 1px solid darkgreen;
+  border-radius: 3px;
+  color: darkgreen;
+  font-family: inherit;
+  font-size: 15px;
+  text-decoration: none;
+  align-items: center;
+  padding: 3px;
 }
 
 .card-container {
@@ -85,6 +150,7 @@ body {
 
 .card-body {
   width: 100%;
+  height: 100%;
   padding: 7px;
 }
 
@@ -153,14 +219,16 @@ body {
 }
 
 .goto-cart-button {
+  display: flex;
   font: inherit;
-  color: darkslategray;
+  color: teal;
   text-decoration: none;
-  border: 2px solid darkslategray;
+  border: 2px solid teal;
   border-radius: 3px;
   width: 80%;
   height: 5vh;
-  text-align: center;
+  justify-content: center;
+  align-items: center;
   margin: 3px;
   background-color: white;
 }
@@ -256,7 +324,7 @@ body {
 
 form {
   width: 100%;
-  height: 100%;
+
 }
 
 .form-container {
@@ -266,6 +334,7 @@ form {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 .card-element {
@@ -297,23 +366,93 @@ form {
   text-decoration: none;
 }
 
+.orders {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.orders-spacer {
+  height: 5vh;
+}
+
 .order-rail {
   display: flex;
   width: 100%;
-  height: 30%;
+  height: 20vh;
 }
 
 .order-card {
   color: darkslategray;
-  width: 12em;
+  width: 11rem;
   border: 1px solid darkslategray;
   border-radius: 3px;
   margin: 7px;
   padding: 7px;
 }
 
+.order-card ul {
+  margin: 0;
+  padding: 0;
+}
+
+.order-card li {
+  list-style: none;
+}
+
+.order {
+  background-color: white;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .order-title {
+  width: 100%;
   display: flex;
   justify-content: space-between;
 }
 
+.order-title h3 {
+  margin: 0;
+}
+
+.spinner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media only screen and (min-width: 500px) {
+  .card-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+   .card-item {
+    width: 20rem;
+    height: 26rem;
+    margin: 7px 7px;
+   }
+
+   .card-image {
+    height: 25vh;
+   }
+   
+   .card-image-item {
+    height: 100%;
+   }
+
+   .navbar {
+    height: 10%;
+   }
+
+   .admin-navbar {
+    height: 10%;
+   }
+}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { Routes, Route, useNavigate } from "react-router-dom"
-import {v4 as uuid} from "uuid"
+import { v4 as uuid } from "uuid"
 import './App.css';
 import Home from './components/Home';
 import Cart from './components/Cart'
@@ -10,18 +10,23 @@ import Orders from "./components/Orders"
 import NewItem from "./components/NewItem"
 import Login from "./components/Login"
 import Register from "./components/Register"
+import ProtectedRoute from "./components/ProtectedRoute"
 import AdminItems from "./components/AdminItems"
-import itemsData from "./data/items-data";
 import EditItem from "./components/EditItem";
+import LoadingSpinner from "./components/LoadingSpinner";
 
 const App = () => {
+  // // // // // useState // // // // //
   const [products, setProducts] = useState(null)
   const [orders, setOrders] = useState([])
+  const [user, setUser] = useState(null)
   const [cart, setCart] = useState({
     items: [],
     totalQuantity: 0,
     subTotal: 0
   })
+
+  // // // // // GLOBAL VARIABLES // // // // //
 
   // Set navigate variable
   const navigate = useNavigate()
@@ -33,6 +38,9 @@ const App = () => {
   // // Clears all localStorage
   // localStorage.clear()
 
+  // // // // // useEffects // // // // //
+
+  // On mount pull all products from database
   useEffect(() => {
     const getProducts = async () => {
       const res = await fetch("/items")
@@ -40,6 +48,16 @@ const App = () => {
       setProducts(data)
     }
     getProducts()
+  }, [])
+
+  // On mount pull all orders from database
+  useEffect(() => {
+    const getOrders = async () => {
+      const res = await fetch("/orders")
+      const data = await res.json()
+      console.log(data);
+    }
+    getOrders()
   }, [])
 
   // On mount check if a local cart exists and set cart state if so
@@ -56,12 +74,19 @@ const App = () => {
     }
   }, [])
 
-  const handleLogin = (data) => {
-    console.log(data);
-  }
+  // On mount check if user is logged in
+  useEffect(() => {
+    const checkLoggedIn = async () => {
+      const res = await fetch('/users/is-authenticated')
+      const data = await res.json()
+      setUser(data.user)
+    }
+    if (!user) checkLoggedIn()
+  }, [user])
+
+  // // // // // ITEMS CRUD RESTFUL ROUTES // // // // //
 
   const handleNew = async (newItem) => {
-    // TO-DO: create fetch and POST to database
     const res = await fetch("/items/new", {
       method: "POST",
       headers: {
@@ -110,53 +135,84 @@ const App = () => {
     setProducts(newProducts)
   }
 
+  // // // // // USERS CRUD RESTFUL ROUTES // // // // //
+
+  // Register new user
+  const handleRegister = async (newUser) => {
+    const res = await fetch("/users/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newUser)
+    })
+    const data = await res.json()
+    setUser(data.user)
+    navigate("/items")
+  }
+
+  // Login existing user
+  const handleLogin = async (userLoggingIn) => {
+    const res = await fetch("/users/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userLoggingIn)
+    })
+    const data = await res.json()
+    setUser(data.user)
+    navigate("/items")
+  }
+
+  // Logout user
+  const handleLogout = async () => {
+    const res = await fetch('/users/logout', {
+      method: 'POST'
+    })
+    const data = await res.json()
+    if (data.success) setUser(null)
+    navigate("/users/login")
+  }
+
+  // // // // // CART LOGIC // // // // //
+
   // Adds item to cart with the current counter quantity
   const addToCart = (product, quantity) => {
 
     // Create Boolean to check if item is in cart
     const inCart = (product) => cart.items.find((item) => item.item_id === product.item_id)
-
     let items
-
     // If product is not available don't add to cart
     if (!product.active) return
-
     // If nothing in cart or product not in cart
     if (!cart.items.length || !inCart(product)) {
-
       // create items array with product added into array
       items = [...cart.items, { ...product, cartQuantity: quantity }]
     } else {
-
       // Otherwise increment the product amount by the quantity parameter
       items = cart.items.map((item) => {
         if (product.item_id !== item.item_id) return item
         return { ...item, cartQuantity: item.cartQuantity + quantity }
       })
     }
-
     // Update totals values in cart object to reflect above changes
     const totals = items.reduce((obj, item) => {
-
       // Total quantity of all items in cart
       obj.totalQuantity += item.cartQuantity
-
       // Subtotal of all items in cart
       obj.subTotal += item.price * item.cartQuantity
       return obj
-
       // Add into totals object
     }, { totalQuantity: 0, subTotal: 0 })
-
     // Spread totals key:values into cart object and set as new cart
     localStorage.setItem("cart", JSON.stringify({ items, ...totals }))
     setCart({ items, ...totals })
   }
 
-  // Deletes the item pass in from the cart and resets the quantity and subTotal
+  // Deletes the item passed in from the cart and resets the quantity and subTotal
   const removeFromCart = (item) => {
     const newCartItems = cart.items.filter((product) => product.item_id !== item.item_id)
-
     // Updates the totals values, removing the deleted item
     const totals = newCartItems.reduce((obj, item) => {
       obj.totalQuantity += item.cartQuantity
@@ -164,7 +220,6 @@ const App = () => {
       return obj
       // Spreads those updated values into the newCartItems object
     }, { totalQuantity: 0, subTotal: 0 })
-
     // Sets the cart state with the new updated array
     localStorage.setItem("cart", JSON.stringify({ items: newCartItems, ...totals }))
     setCart({ items: newCartItems, ...totals })
@@ -199,11 +254,50 @@ const App = () => {
     navigate("/success")
   }
 
+  // // // // // ORDERS CRUD RESTFUL ROUTES // // // // //
+
+  const dummyOrder = {
+    name: "Jimothy",
+    contact: 1122334455,
+    items: [{
+      active: true,
+      cartQuantity: 2,
+      description: "A yummy slow-cooked adobo chicken with guac and pico.",
+      imageURL: "https://gimmedelicious.com/wp-content/uploads/2019/01/Quick-Chicken-Tacos-food-truck-style-9.jpg",
+      item_id: 1,
+      name: "Chicken taco",
+      price: 4
+    },
+    {
+      active: true,
+      cartQuantity: 2,
+      description: "Overnight stewed carnitas with pickled onions and salsa verde.",
+      imageURL: "https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2020/04/Carnitas-Tacos-2.jpg",
+      item_id: 2,
+      name: "Carnitas taco",
+      price: 5
+    }
+    ]
+  }
+
+  const handleNewOrder = async (newOrder) => {
+    const res = await fetch("/users/orders", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newOrder)
+    })
+    const data = await res.json()
+  }
+
   return (
     <div className="App">
       <Routes>
 
-        <Route path="/home" element={products && <Home
+        <Route path="/items/loading" element={<LoadingSpinner />} />
+
+        <Route path="/home" element={<Home
           products={products}
           addToCart={addToCart}
           cart={cart}
@@ -215,25 +309,69 @@ const App = () => {
           removeFromCart={removeFromCart}
         />} />
 
-        <Route path="/checkout" element={<Checkout cart={cart} handleCheckoutSubmit={handleCheckoutSubmit} />} />
+        <Route path="/checkout" element={<Checkout
+          cart={cart}
+          handleCheckoutSubmit={handleCheckoutSubmit}
+        />}
+        />
 
         <Route path="/success" element={<Success cart={cart} />} />
 
-        <Route path="/items" element={products && <AdminItems 
-            products={products}
-            handleDelete={handleDelete} 
-          />} 
+        <Route path="/users/register" element={<Register
+          handleRegister={handleRegister}
+          user={user}
+          handleLogout={handleLogout}
+        />}
         />
 
-        <Route path="/items/new" element={<NewItem handleNew={handleNew} />} />
+        <Route path="/users/login" element={<Login
+          handleLogin={handleLogin}
+          user={user}
+          handleLogout={handleLogout}
+        />}
+        />
 
-        <Route path="/items/edit/:id" element={products && <EditItem products={products} handleEdit={handleEdit} />} />
+        <Route path="/items" element={
+          <ProtectedRoute user={user} >
+            products && <AdminItems
+              products={products}
+              handleDelete={handleDelete}
+              user={user}
+              handleLogout={handleLogout}
+            />
+          </ProtectedRoute>
+        } />
 
-        <Route path="/users/register" element={<Register />} />
+        <Route path="/items/new" element={
+          <ProtectedRoute user={user} >
+            <NewItem
+              handleNew={handleNew}
+              user={user}
+              handleLogout={handleLogout}
+            />
+          </ProtectedRoute>
+        } />
 
-        <Route path="/users/login" element={<Login handleLogin={handleLogin} />} />
+        <Route path="/items/edit/:id" element={
+          <ProtectedRoute user={user} >
+            products && <EditItem
+              products={products}
+              handleEdit={handleEdit}
+              user={user}
+              handleLogout={handleLogout}
+            />
+          </ProtectedRoute>
+        } />
 
-        <Route path="/orders" element={orders && <Orders orders={orders} />} />
+        <Route path="/orders" element={
+          <ProtectedRoute user={user} >
+            <Orders
+              orders={orders}
+              user={user}
+              handleLogout={handleLogout}
+            />
+          </ProtectedRoute>
+        } />
 
       </Routes>
     </div>

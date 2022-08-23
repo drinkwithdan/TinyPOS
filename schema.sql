@@ -23,7 +23,7 @@ CREATE TABLE orders (
   name VARCHAR(255),
   contact INTEGER,
   status INTEGER DEFAULT 1,
-  timestamp TIMESTAMP DEFAULT current_timestamp,
+  timestamp TIMESTAMP DEFAULT current_timestamp
 );
 
 CREATE TABLE order_items (

@@ -8,7 +8,7 @@ const Navbar = ({ cart }) => {
     <div className="navbar">
 
       <div className="left-icon">
-        <Link to="/">
+        <Link to="/home">
           <HomeIcon fontSize="large" sx={{ color: "black" }} />
         </Link>
       </div>

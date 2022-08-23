@@ -1,27 +1,18 @@
+import AdminNavbar from "./AdminNavbar"
+import LoadingSpinner from "./LoadingSpinner"
 import { OrderRailOne } from "./OrderRailOne"
+import { OrderRailThree } from "./OrderRailThree"
+import { OrderRailTwo } from "./OrderRailTwo"
 
-// // REDUNDANT CODE?
-// const Order = (order) => {
-//   const itemsList = order.order.items.map((item) => {
-//     return <li>{item.name} x {item.cartQuantity}</li>
-//   })
-//   return (
-//     <div className="order">
-//       <h3>{order.order.name}</h3>
-//       <h3>{order.order.contact}</h3>
-//       <ul>
-//         {itemsList}
-//       </ul>
-//     </div>
-//   )
-// }
-
-const Orders = ({ orders }) => {
-
+const Orders = ({ orders, user, handleLogout }) => {
+  console.log(orders);
   return (
     <div className="orders">
-      <h1>Orders</h1>
-      <OrderRailOne orders={orders}/>
+      <AdminNavbar user={user} handleLogout={handleLogout} />
+      <div className="orders-spacer"></div>
+      {orders ? <OrderRailOne orders={orders} /> : <LoadingSpinner />}
+      {orders ? <OrderRailTwo orders={orders} /> : <LoadingSpinner />}
+      {orders ? <OrderRailThree orders={orders} /> : <LoadingSpinner />}
     </div>
   )
 }

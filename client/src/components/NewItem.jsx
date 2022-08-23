@@ -1,7 +1,9 @@
 import { useState } from "react"
-import { FormControl, FormGroup, InputLabel, Input, Checkbox, Button } from "@mui/material"
+import { Link } from "react-router-dom"
+import { FormControl, TextField, InputLabel, Input, Checkbox, Button } from "@mui/material"
+import AdminNavbar from "./AdminNavbar"
 
-const NewItem = ({ handleNew }) => {
+const NewItem = ({ user, handleNew, handleLogout }) => {
   const [fields, setFields] = useState({})
 
   const handleSubmit = (event) => {
@@ -21,8 +23,9 @@ const NewItem = ({ handleNew }) => {
 
   return (
     <div className="form-container">
+      <AdminNavbar user={user} handleLogout={handleLogout} />
+      <form onSubmit={handleSubmit} className="form-container" >
       <h3>New Item</h3>
-      <form onSubmit={handleSubmit} >
         <FormControl fullWidth sx={{ margin: "5px" }} >
           <InputLabel>Name</InputLabel>
           <Input
@@ -35,6 +38,8 @@ const NewItem = ({ handleNew }) => {
           <InputLabel>Description</InputLabel>
           <Input
             id="description"
+            multiline
+            rows={4}
             required
             onChange={handleChange}
           />
@@ -43,6 +48,7 @@ const NewItem = ({ handleNew }) => {
           <InputLabel>Image URL</InputLabel>
           <Input
             id="imageURL"
+            multiline
             required
             onChange={handleChange}
           />
@@ -63,7 +69,10 @@ const NewItem = ({ handleNew }) => {
             onChange={handleChange}
           />
         </FormControl>
-        <Button type="submit" >Submit</Button>
+        <Button type="submit" >ADD ITEM</Button>
+        <Link to="/items" className="goto-cart-button">
+          BACK TO ITEMS
+        </Link>
       </form>
     </div>
   )
