@@ -180,6 +180,16 @@ def get_orders():
   """
   g.db["cursor"].execute(query)
   orders = g.db["cursor"].fetchall()
+
+  # Get order_items for each order
+  for order in orders:
+    query = """
+      SELECT * FROM order_items
+      WHERE order_id = %s
+    """
+    g.db["cursor"].execute(query, (order["order_id"],))
+    order_items = g.db["cursor"].fetchall()
+    order["items"] = order_items
   return jsonify(orders)
 
 # NEW ORDER "POST" ROUTE
@@ -188,41 +198,95 @@ def new_order():
   name = request.json["name"]
   contact = request.json["contact"]
   items = request.json["items"]
-  print(items)
-  # query = """
-  #   INSERT INTO orders
-  #   (name, contact)
-  #   VALUES (%s, %s)
-  #   RETURNING *
-  # """
-  # g.db["cursor"].execute(query, (name, contact))
-  # g.db["connection"].commit()
-  # new_order = g.db["cursor"].fetchone()
-  return jsonify("Bonjour")
 
-# SHOW ORDER "GET" ROUTE
-def show_order():
-  # pass in id
+  # CREATING NEW ORDER
   query = """
-    SELECT * FROM orders
-    WHERE order.order_id === %s
-  """
-  g.db["cursor"].execute(query, (id,))
-  order = g.db["cursor"].fetchone()
-  return jsonify(order)
-
-# EDIT ORDER "PUT" ROUTE
-def edit_order():
-  order_id = request.json["order_id"]
-  status = request.json["status"]
-  query = """
-    UPDATE orders
-    SET status = %s
-    WHERE orders.order_id = %s
+    INSERT INTO orders
+    (name, contact)
+    VALUES (%s, %s)
     RETURNING *
   """
-  g.db["cursor"].execute(query, (status, order_id))
+  g.db["cursor"].execute(query, (name, contact))
   g.db["connection"].commit()
-  order = g.db["cursor"].fetchone()
-  return jsonify(order)
+  new_order = g.db["cursor"].fetchone()
+
+  # CREATING NEW ORDER ITEMS
+  # Add (item_id, cart_quantity) to a new List (filtering out all other cart item data)
+  order_items = []
+  for item in items:
+    order_items.append({"item_id": item["item_id"], "cart_quantity": item["cartQuantity"], "item_name": item["name"]})
+  
+  # Looping through the new order_items List and adding each item to the order_items table
+  created_order_items = []
+  for item in order_items:
+    query = """
+      INSERT INTO order_items
+      (order_id, item_id, quantity, item_name)
+      VALUES
+      (%s, %s, %s, %s)
+      RETURNING *
+    """
+    g.db["cursor"].execute(query, (new_order["order_id"], item["item_id"], item["cart_quantity"], item["item_name"]))
+    g.db["connection"].commit()
+    new_order_item = g.db["cursor"].fetchone()
+    created_order_items.append(new_order_item)
+  
+  new_order["items"] = created_order_items
+  return jsonify(new_order)
+
+# # SHOW ORDER "GET" ROUTE
+# @app.route("/orders/<id>",)
+# def show_order(id):
+#   # id from params
+#   query = """
+#     SELECT * FROM orders
+#     WHERE order.order_id === %s
+#   """
+#   g.db["cursor"].execute(query, (id,))
+#   order = g.db["cursor"].fetchone()
+#   return jsonify(order)
+
+# # SHOW ORDER_ITEMS "GET" ROUTE
+# @app.route("orders/items/<id>")
+# def show_order_items(id):
+#   order_id = request.json["order_id"]
+#   query = """
+#     SELECT * FROM order_items
+#     WHERE order_id = %s
+#   """
+#   g.db["cursor"].execute(query, (order_id,))
+#   order_items = g.db["cursor"].fetchall()
+#   return jsonify(order_items)
+
+# # EDIT ORDER "PUT" ROUTE
+# app.route("/orders/edit/<id>", methods=["PUT"])
+# def edit_order(id):
+#   order_id = request.json["order_id"]
+#   status = request.json["status"]
+#   query = """
+#     UPDATE orders
+#     SET status = %s
+#     WHERE orders.order_id = %s
+#     RETURNING *
+#   """
+#   g.db["cursor"].execute(query, (status, order_id))
+#   g.db["connection"].commit()
+#   order = g.db["cursor"].fetchone()
+#   return jsonify(order)
+
+# # DESTROY ORDER "DELETE" ROUTE
+# app.route("/orders/<id>", methods=["DELETE"])
+# def delete_order(id):
+#   order_id = request.json["order_id"]
+#   query = """
+#     DELETE FROM orders
+#     WHERE order_id = %s
+#     RETURNING *
+#   """
+#   g.db["cursor"].execute(query, (order_id,))
+#   g.db["connection"].commit()
+#   deleted_order = g.db["cursor"].fetchone()
+#   return jsonify(deleted_order)
+
+
 

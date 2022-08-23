@@ -28,6 +28,7 @@ CREATE TABLE orders (
 
 CREATE TABLE order_items (
   item_id SERIAL REFERENCES items (item_id) ON DELETE CASCADE,
-  order_id SERIAL REFERENCES orders (order_id) ON DELETE CASCADE
+  order_id SERIAL REFERENCES orders (order_id) ON DELETE CASCADE,
+  quantity INTEGER
 );
 

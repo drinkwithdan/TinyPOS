@@ -55,7 +55,7 @@ const App = () => {
     const getOrders = async () => {
       const res = await fetch("/orders")
       const data = await res.json()
-      console.log(data);
+      setOrders(data)
     }
     getOrders()
   }, [])
@@ -279,6 +279,8 @@ const App = () => {
     }
     ]
   }
+
+  // handleNewOrder(dummyOrder)
 
   const handleNewOrder = async (newOrder) => {
     const res = await fetch("/users/orders", {

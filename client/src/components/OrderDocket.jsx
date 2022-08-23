@@ -1,7 +1,8 @@
 export const OrderDocket = ({ order }) => {
 
+  console.log(order);
   const itemsList = order.items.map((item) => {
-    return <li key={item.name}>{item.name} x {item.cartQuantity}</li>
+    return <li key={item.item_id}>{item.item_name} x {item.quantity}</li>
   })
   return (
     <div className="order-card">
