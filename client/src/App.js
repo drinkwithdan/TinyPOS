@@ -67,12 +67,13 @@ const App = () => {
     }
   }, [])
 
-  // On mount check if there are any local orders and populate orders state
-  useEffect(() => {
-    if (orders.length === 0 && getLocalOrders !== null) {
-      setOrders(getLocalOrders)
-    }
-  }, [])
+  // // REDUNDANT?
+  // // On mount check if there are any local orders and populate orders state
+  // useEffect(() => {
+  //   if (orders.length === 0 && getLocalOrders !== null) {
+  //     setOrders(getLocalOrders)
+  //   }
+  // }, [])
 
   // On mount check if user is logged in
   useEffect(() => {
@@ -175,6 +176,27 @@ const App = () => {
     navigate("/users/login")
   }
 
+  // // // // // ORDERS CRUD RESTFUL ROUTES // // // // //
+
+  const handleNewOrder = async (newOrder) => {
+    console.log("Fired")
+    const res = await fetch("/orders/new", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newOrder)
+    })
+    const data = await res.json()
+    console.log(data);
+    return data
+  }
+
+  const handleOrderStatus = async (order_id, newStatus) => {
+    console.log("Change order", order_id, "to status", newStatus);
+  }
+
+
   // // // // // CART LOGIC // // // // //
 
   // Adds item to cart with the current counter quantity
@@ -228,70 +250,30 @@ const App = () => {
 
   // Take form from checkout and append items to orders state
   const handleCheckoutSubmit = (form) => {
-    console.log(form)
-    const newOrders = [...orders]
-    newOrders.push({
-      items: [...cart.items],
-      id: uuid(),
-      timestamp: Date.now(),
+
+    // Create new order object, POST to database and add returned object to orders state
+    const newOrder = {
       name: form.name,
       contact: form.telephone,
-      status: 1
-    })
-
-    // TO-DO: Add new order to database
-
-    // Set new orders state and empty cart and localStorage
+      items: [...cart.items] 
+    }
+    const returnedOrder = handleNewOrder(newOrder)
+    const newOrders = [...orders]
+    newOrders.push(returnedOrder)
     setOrders(newOrders)
-    localStorage.setItem("orders", JSON.stringify(newOrders))
+
+    // Empty cart and localStorage
     localStorage.removeItem("cart")
     setCart({
       items: [],
       totalQuantity: 0,
       subTotal: 0
     })
-    console.log("Order added, cart cleared");
+
+    // Navigate to success page
     navigate("/success")
   }
 
-  // // // // // ORDERS CRUD RESTFUL ROUTES // // // // //
-
-  const dummyOrder = {
-    name: "Jimothy",
-    contact: 1122334455,
-    items: [{
-      active: true,
-      cartQuantity: 2,
-      description: "A yummy slow-cooked adobo chicken with guac and pico.",
-      imageURL: "https://gimmedelicious.com/wp-content/uploads/2019/01/Quick-Chicken-Tacos-food-truck-style-9.jpg",
-      item_id: 1,
-      name: "Chicken taco",
-      price: 4
-    },
-    {
-      active: true,
-      cartQuantity: 2,
-      description: "Overnight stewed carnitas with pickled onions and salsa verde.",
-      imageURL: "https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2020/04/Carnitas-Tacos-2.jpg",
-      item_id: 2,
-      name: "Carnitas taco",
-      price: 5
-    }
-    ]
-  }
-
-  // handleNewOrder(dummyOrder)
-
-  const handleNewOrder = async (newOrder) => {
-    const res = await fetch("/users/orders", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newOrder)
-    })
-    const data = await res.json()
-  }
 
   return (
     <div className="App">
@@ -371,6 +353,7 @@ const App = () => {
               orders={orders}
               user={user}
               handleLogout={handleLogout}
+              handleOrderStatus={handleOrderStatus}
             />
           </ProtectedRoute>
         } />

@@ -45,7 +45,7 @@ body {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color:bisque; 
+  background-color:darkturquoise; 
 }
 
 .navbar .left-icon {
@@ -78,7 +78,7 @@ body {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color:bisque; 
+  background-color:darkturquoise; 
 }
 
 .admin-navbar .left-icon {
@@ -106,10 +106,10 @@ body {
 
 .logout-button {
   display: flex;
-  border: 1px solid darkred;
+  border: 1px solid red;
   background: none;
   border-radius: 3px;
-  color: darkred;
+  color: red;
   font-family: inherit;
   font-size: 15px;
   text-decoration: none;
@@ -119,9 +119,9 @@ body {
 
 .login-button {
   display: flex;
-  border: 1px solid darkgreen;
+  border: 1px solid green;
   border-radius: 3px;
-  color: darkgreen;
+  color: green;
   font-family: inherit;
   font-size: 15px;
   text-decoration: none;
@@ -357,7 +357,7 @@ form {
 .footer {
   text-align: center;
   width: 100%;
-  background-color: bisque;
+  background-color: darkturquoise;
   height: 5rem;
   padding: 3px;
 }
@@ -441,11 +441,18 @@ form {
    }
 
    .card-image {
-    height: 25vh;
+    height: 40%;
    }
    
    .card-image-item {
     height: 100%;
+   }
+
+   .card-body {
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
    }
 
    .navbar {

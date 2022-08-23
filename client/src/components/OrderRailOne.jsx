@@ -1,11 +1,15 @@
 import { OrderDocket } from "./OrderDocket"
 
-export const OrderRailOne = ({ orders }) => {
+export const OrderRailOne = ({ orders, handleOrderStatus }) => {
 
   const orderOneList = orders.filter((order) => order.status === 1)
 
   const orderList = orderOneList.map((order) => {
-    return <OrderDocket key={order.id} order={order} />
+    return <OrderDocket 
+      key={order.id} 
+      order={order} 
+      handleOrderStatus={handleOrderStatus} 
+    />
   })
 
   return (

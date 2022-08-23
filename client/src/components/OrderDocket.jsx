@@ -1,6 +1,9 @@
-export const OrderDocket = ({ order }) => {
+export const OrderDocket = ({ order, handleOrderStatus }) => {
 
-  console.log(order);
+  const handleClick = () => {
+    handleOrderStatus(order.order_id, order.status + 1)
+  }
+
   const itemsList = order.items.map((item) => {
     return <li key={item.item_id}>{item.item_name} x {item.quantity}</li>
   })
@@ -19,7 +22,9 @@ export const OrderDocket = ({ order }) => {
           {itemsList}
         </ul>
         <div>
-          <button>ACCEPT</button>
+          <button className="docket-button" onClick={handleClick}>
+            NEXT RAIL
+          </button>
         </div>
       </div>
     </div>

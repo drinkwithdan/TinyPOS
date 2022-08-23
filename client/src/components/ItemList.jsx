@@ -17,8 +17,8 @@ const ItemList = ({products, cart, addToCart}) => {
 
   return (
     <div className="itemlist">
+      <h2>Add items to cart</h2>
       <div className="card-container">
-        <h2>Add items to cart</h2>
         {products && itemsList}
         <Link to="/cart" className="goto-cart-button">GO TO CART</Link>
       </div>

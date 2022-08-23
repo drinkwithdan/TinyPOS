@@ -19,7 +19,7 @@ const Navbar = ({ cart }) => {
 
       <div className="right-icon">
         <Link to="/cart">
-          <Badge badgeContent={cart.totalQuantity} color="info">
+          <Badge badgeContent={cart.totalQuantity} color="secondary">
             <ShoppingCartIcon fontSize="large" sx={{ color: "black" }} />
           </Badge>
         </Link>
