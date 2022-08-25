@@ -46,7 +46,7 @@ const CheckoutForm = ({ handleCheckoutSubmit }) => {
             aria-describedby="my-helper-text" 
             onChange={handleChange} 
           />
-          <FormHelperText id="my-helper-text">You will receive an SMS when your order is ready. {notValidContactNumber && "(Not a valid mobile number)"} </FormHelperText>
+          <FormHelperText id="my-helper-text">Your number will only be used to notify you when your order is complete. {notValidContactNumber && "(Not a valid mobile number)"} </FormHelperText>
         </FormControl>
         <FormControl fullWidth sx={{ margin: "5px" }}>
           <InputLabel>Address Line 1</InputLabel>

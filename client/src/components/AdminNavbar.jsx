@@ -34,11 +34,13 @@ const AdminNavbar = ({ user, handleLogout }) => {
       <div className="right-icon">
         {user ?
           <button onClick={handleLogout} className="logout-button" >
-            LOGOUT <PersonIcon fontSize="small" sx={{ color: "red" }} /> 
+            LOGOUT 
+            {/* <PersonIcon fontSize="small" sx={{ color: "red" }} />  */}
           </button>
           :
           <Link to="/users/login" className="login-button">
-            LOGIN <PersonIcon fontSize="medium" sx={{ color: "green" }} />
+            LOGIN 
+            {/* <PersonIcon fontSize="medium" sx={{ color: "green" }} /> */}
           </Link>
         }
       </div>

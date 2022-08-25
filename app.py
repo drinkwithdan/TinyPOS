@@ -12,6 +12,7 @@ from flask import (
 from werkzeug.security import generate_password_hash, check_password_hash
 import psycopg2
 import os
+from twilio.rest import Client
 
 from .db import get_db, close_db
 
@@ -29,6 +30,27 @@ def disconnect_from_db(response):
   close_db()
   return response
 
+# # # # # TWILIO API # # # # #
+
+def twilio_SMS(order):
+  # customer_number = order["contact"]
+  # formatted_number = f"+61{customer_number}"
+  # account_sid = os.environ["TWILIO_ACCOUNT_SID"]
+  # auth_token = os.environ["TWILIO_AUTH_TOKEN"]
+  # twilio_number=os.environ["TWILIO_NUMBER"]
+  # client = Client(account_sid, auth_token)
+
+  # message = client.messages \
+  #               .create(
+  #                    body="Your Tiny Tacos order is ready for collection!",
+  #                    from_=twilio_number,
+  #                    to=formatted_number
+  #                )
+
+  # print(message.sid)
+  print("Message sent to customer")
+
+  
 # # # # # CRUD RESTFUL ROUTES FOR ITEMS # # # # #
 
 # INDEX ROUTE "GET" ITEMS
@@ -236,18 +258,7 @@ def new_order():
   new_order["items"] = created_order_items
   return jsonify(new_order)
 
-# # SHOW ORDER "GET" ROUTE
-# @app.route("/orders/<id>",)
-# def show_order(id):
-#   # id from params
-#   query = """
-#     SELECT * FROM orders
-#     WHERE order.order_id === %s
-#   """
-#   g.db["cursor"].execute(query, (id,))
-#   order = g.db["cursor"].fetchone()
-#   return jsonify(order)
-
+# # (NOT NEEDED FOR MVP)
 # # SHOW ORDER_ITEMS "GET" ROUTE
 # @app.route("orders/items/<id>")
 # def show_order_items(id):
@@ -265,7 +276,6 @@ def new_order():
 def edit_order(id):
   order_id = request.json["order_id"]
   new_status = request.json["new_status"]
-  print(request.json)
   query = """
     UPDATE orders
     SET status = %s
@@ -275,6 +285,10 @@ def edit_order(id):
   g.db["cursor"].execute(query, (new_status, order_id))
   g.db["connection"].commit()
   updated_order = g.db["cursor"].fetchone()
+
+  # If order.status = 3 (completed) - call Twilio API to send "completed" SMS
+  if updated_order["status"] == 3:
+    twilio_SMS(updated_order)
 
   # Fetch order items for this order and append to updated_order
   query = """
@@ -287,6 +301,7 @@ def edit_order(id):
 
   return jsonify(updated_order)
 
+# # (NOT NEEDED FOR MVP)
 # # DESTROY ORDER "DELETE" ROUTE
 # app.route("/orders/<id>", methods=["DELETE"])
 # def delete_order(id):

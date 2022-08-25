@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Routes, Route, useNavigate } from "react-router-dom"
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom"
 import { v4 as uuid } from "uuid"
 import './App.css';
 import Home from './components/Home';
@@ -184,12 +184,13 @@ const App = () => {
       body: JSON.stringify(newOrder)
     })
     const data = await res.json()
-    console.log(data)
     return data
   }
 
+  // Order status PUT updated status
   const handleOrderStatus = async (order_id, newStatus) => {
-    console.log("Change order", order_id, "to status", newStatus)
+
+    // Fetch request to change order.status in database
     const res = await fetch(`/orders/edit/${order_id}`, {
       method: "PUT",
       headers: {
@@ -198,19 +199,28 @@ const App = () => {
       body: JSON.stringify({ order_id: order_id, new_status: newStatus })
     })
     const updatedOrder = await res.json()
-    console.log(updatedOrder);
+
+    // If order is status 3 (completed) call the SMS API to notify customer
+    if (updatedOrder.status === 3) {
+      handleCompletedOrder(updatedOrder)
+    }
+
+    // Update relevant order in orders state
     const index = orders.indexOf(orders.find((order) => order.order_id === updatedOrder.order_id))
-    console.log(index);
     const newOrders = [
       ...orders.slice(0, index),
       updatedOrder,
       ...orders.slice(index + 1)
     ]
-    console.log(newOrders);
     setOrders(newOrders)
   }
 
+    // TO-D0: when order reaches stage 3, activate Twilio to send an SMS to mobile
 
+    const handleCompletedOrder = (order) => {
+      console.log("completed order for ", order.name, order.contact);
+    }
+  
   // // // // // CART LOGIC // // // // //
 
   // Adds item to cart with the current counter quantity
@@ -289,13 +299,13 @@ const App = () => {
     navigate("/success")
   }
 
+  // // // // // ROUTES // // // // //
 
   return (
     <div className="App">
       <Routes>
 
-        <Route path="/items/loading" element={<LoadingSpinner />} />
-
+        {/* Index route */}
         <Route path="/home" element={<Home
           products={products}
           addToCart={addToCart}
@@ -303,19 +313,23 @@ const App = () => {
         />}
         />
 
+        {/* Cart route */}
         <Route path="/cart" element={<Cart
           cart={cart}
           removeFromCart={removeFromCart}
         />} />
 
+        {/* Checkout route */}
         <Route path="/checkout" element={<Checkout
           cart={cart}
           handleCheckoutSubmit={handleCheckoutSubmit}
         />}
         />
 
+        {/* Successful checkout route */}
         <Route path="/success" element={<Success cart={cart} />} />
-
+        
+        {/* New user register route */}
         <Route path="/users/register" element={<Register
           handleRegister={handleRegister}
           user={user}
@@ -323,13 +337,15 @@ const App = () => {
         />}
         />
 
+        {/* Users login route */}
         <Route path="/users/login" element={<Login
           handleLogin={handleLogin}
           user={user}
           handleLogout={handleLogout}
         />}
         />
-
+        
+        {/* Items index route */}
         <Route path="/items" element={
           <ProtectedRoute user={user} >
             products && <AdminItems
@@ -341,6 +357,7 @@ const App = () => {
           </ProtectedRoute>
         } />
 
+        {/* New item route */}
         <Route path="/items/new" element={
           <ProtectedRoute user={user} >
             <NewItem
@@ -351,6 +368,7 @@ const App = () => {
           </ProtectedRoute>
         } />
 
+        {/* Edit item route */}
         <Route path="/items/edit/:id" element={
           <ProtectedRoute user={user} >
             products && <EditItem
@@ -362,6 +380,7 @@ const App = () => {
           </ProtectedRoute>
         } />
 
+        {/* Orders route */}
         <Route path="/orders" element={
           <ProtectedRoute user={user} >
             <Orders
@@ -373,6 +392,7 @@ const App = () => {
           </ProtectedRoute>
         } />
 
+        {/* Collected orders route */}
         <Route path="/orders/collected" element={
           <ProtectedRoute user={user} >
             <CollectedOrders
@@ -383,6 +403,9 @@ const App = () => {
             />
           </ProtectedRoute>
         } />
+
+        {/* Catches all other routes and sends to home */}
+        <Route path="/*" element={<Navigate to="/home" />} />
 
       </Routes>
     </div>
