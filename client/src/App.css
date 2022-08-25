@@ -391,7 +391,7 @@ form {
 .order-rail-title {
   text-align: center;
   color: black;
-  border: 1px solid rgba(0, 206, 209, 0.727);
+  border: 2px solid rgb(92, 235, 237);
   border-radius: 5px;
   background-color:rgb(92, 235, 237);
   margin: 0 5px;

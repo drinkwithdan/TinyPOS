@@ -13,6 +13,34 @@ This app was built with:
 - Python & Flask
 - PostgreSQL
 
+Dependencies (Python API):
+- flask
+- psycopg2
+- python-dotenv
+- twilio
+- gunicorn
+
+Dependencies (React JS):
+- react-router-dom
+- @mui/material (+@emotion/react, @emotion/styled)
+- @stripe/stripe-js (+@stripe/react-stripe-js)
+
+##### Installation
+
+Fork and clone, or just clone the TinyPOS repo onto your local machine. Using pipenv, run a `$pipenv install` to install all the Python dependencies in the root folder. Then CD into the `client` folder and run a `npm install` to set up the React app.
+
+In the root folder, create a `.env` file which contains:
+- SECRET_KEY (of your choosing)
+- SECRET_PHRASE (to validate new user registration)
+- DATABASE_URL (`(host)://(db_user):(password)@(host)/(database)`)
+- TWILIO_AUTH_TOKEN (a free account can be set up with [Twilio](https://www.twilio.com/try-twilio))
+- TWILIO_AUTH_TOKEN
+- TWILIO_NUMBER
+
+Once the above are set up you can run the `seed/run.sql` file in the root folder in PostgreSQL, this will set up your database and seed some initial products.
+
+Happy hacking!
+
 ##### Viewing the app
 
 A live version of the app can be found [here](https://tinypos-app.herokuapp.com/)
@@ -127,6 +155,10 @@ Is accessed on mount and on user change. This allows access to the admin routes.
 The vast majority of the styling was written in CSS by myself, some components such as the `Form` components and `Loading Spinner` came from the MUI component library - but I decided early on I wanted full control of all the component styling so limited use of external libraries.
 
 A Card Auth form field was imported from `Stripe`, but this was for display purposes only.
+
+For the customer front-end a simple card-based structure was the easiest setup. `Proxima Nova` was chosen as the overall font as a nice compromise between legibility and being aesthetically pleasing. The `h1` font throughout is `Dynapuff`, which adds a nice informal touch as well as some rounded shapes in an otherwise very linear-looking app. For the same reason the `palegreen` colour was chosen for the navbars and footer - adding a little bit of character to the screen without looking too informal.
+
+For the Kitchen dockets a simple white background and `Helvetica` font was chosen to improve legibility from afar.The dark background helps the orders stand out and also helps the staff read contents quickly.
 
 ### Backend
 
