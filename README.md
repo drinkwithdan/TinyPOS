@@ -209,10 +209,13 @@ A tab on each order item opens a nested route which displays basic recipe for th
 #### Dietaries
 Integrated with the above would be the ability for the customer to selected certain dietaries, and have their product list tailored to their needs. It would also then inform the kitchen team about these dietary requirements to avoid cross-contamination of food.
 
+#### Accessibility
+The option to render the customer or Back Of House screen using a more accessible font such as [Dyslexie](https://www.dyslexiefont.com/) or adding different styling options for the Back Of House orders screen, such as a dark background, to improve accessible reading.
+
 #### Better large-screen rendering
 As the app was developed for mobile view it loses some visual appeal on larger screens. Given more time I would polish the CSS for larger `media-queries` so larger screens render in a more standardised layout.
 
 #### Full POS services
-The checkout features are basically a mockup, I would like to develop these out into a fully functioning payment screen which processes electronic payment and saves the daily transactions into a Data-analysis table - allowing easy viewing of sales data across daily, weekly or monthly time periods.
+The checkout features are basically a mockup, I would like to develop these out into a fully functioning payment screen which processes electronic payment and saves the daily transactions into a Data-analysis table - allowing easy viewing of sales data across daily, weekly or monthly time periods. Possibly the introduction of a `till` route which displays the current completed orders and facilitates cash payments.
 
 There are many other features I would like to implement onto this project. Hopefully I will find the time!
