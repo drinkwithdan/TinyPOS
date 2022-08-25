@@ -18,7 +18,7 @@ from .db import get_db, close_db
 
 # # # # # INITIALISING # # # # #
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="./client/build", static_url_path="/")
 app.secret_key = os.environ.get("SECRET_KEY")
 
 @app.before_request
@@ -32,7 +32,10 @@ def disconnect_from_db(response):
 
 # # # # # TWILIO API # # # # #
 
+
 def twilio_SMS(order):
+  # # Un-comment below for SMS functionality:
+
   # customer_number = order["contact"]
   # formatted_number = f"+61{customer_number}"
   # account_sid = os.environ["TWILIO_ACCOUNT_SID"]
@@ -48,6 +51,8 @@ def twilio_SMS(order):
   #                )
 
   # print(message.sid)
+
+  # # End commented section
   print("Message sent to customer")
 
   
@@ -316,5 +321,18 @@ def edit_order(id):
 #   deleted_order = g.db["cursor"].fetchone()
 #   return jsonify(deleted_order)
 
+# # # # # DEPLOYMENT # # # # #
 
+# Default route
+app.route("/")
+def index():
+  return app.send_static_file("index.html")
+
+# React route to index.html
+@app.errorhandler(404)
+def not_found(e):
+  return app.send_static_file("index.html")
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
 
