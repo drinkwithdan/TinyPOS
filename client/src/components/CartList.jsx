@@ -8,7 +8,7 @@ const CartList = ({ cart, removeFromCart }) => {
 
   return (
     <div className="cart-list">
-      <h2>Your cart:</h2>
+      <h2 className="form-h1">Your cart:</h2>
       {cartList}
       <div className="cart-totals">
         <h2>Total: ${cart.subTotal.toFixed(2)}</h2>

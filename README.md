@@ -28,21 +28,17 @@ The admin route, including the orders screen, is designed to be rendered on a sm
 ### User Stories
 
 As a starting point for designing the app, some user stories were written to encapsulate the project brief:
-```
-“Jane has a food truck, she has found that post-pandemic it has been hard to find enough casual workers to consistently staff her food truck. One person in the kitchen, one front of house and one running food is too risky when one of them could call in sick at any point. She wants to do everything herself.”
-```
-```
-“Anthony is a foodie, he loves supporting local businesses and wants to spend his money on small, sustainable businesses rather than large food chains but finds the contact-free ordering systems at those chains quick and easy to use.”
-```
-```
-“Juanita owns an ice-cream stall and wants a system to manage her front-of-house orders as well as her current orders. She doesn’t want to pay out for one of the POS systems that are feature heavy and expensive”
-```
-```
-“Paulo is a casual worker who wants to pick up extra work hours at the weekend but doesn’t have in-depth knowledge of cooking processes or customer service.”
-```
-```
-“Petra has a chain of taco stalls and vans and wants her product to be more standardised across her casual worker teams without having to pay the staff hours required for training.”
-```
+
+*“Jane has a food truck, she has found that post-pandemic it has been hard to find enough casual workers to consistently staff her food truck. One person in the kitchen, one front of house and one running food is too risky when one of them could call in sick at any point. She wants to do everything herself.”*
+
+*“Anthony is a foodie, he loves supporting local businesses and wants to spend his money on small, sustainable businesses rather than large food chains but finds the contact-free ordering systems at those chains quick and easy to use.”*
+
+*“Juanita owns an ice-cream stall and wants a system to manage her front-of-house orders as well as her current orders. She doesn’t want to pay out for one of the POS systems that are feature heavy and expensive”*
+
+*“Paulo is a casual worker who wants to pick up extra work hours at the weekend but doesn’t have in-depth knowledge of cooking processes or customer service.”*
+
+*“Petra has a chain of taco stalls and vans and wants her product to be more standardised across her casual worker teams without having to pay the staff hours required for training.”*
+
 
 ### MVC
 
@@ -91,7 +87,7 @@ A Google forms survey was sent to some ex-colleagues in Kitchen roles. The feedb
 - Timestamp
 - Order items
 
-With this in mind a very simple card layout was designed to mimic a kitchen order docket, with just the basic information and an easy-to-use button to sequence the orders through their various stages.
+With this in mind a very simple card layout was designed to mimic a kitchen order docket, with just the basic information and an easy-to-use button to sequence the orders through their various stages. Kitchen staff were opposed to any radical redesign of this part, so steps were taken to make the dockets familiar and not in any way challenging.
 
 The form also asked about buttons vs. drag-and-drop, the overwhelming response was that buttons are much preferred due to ease of use and minimising mistakes.
 
@@ -149,6 +145,27 @@ A iterating query was needed to populate and pull data from the `order_items` ta
 The backend API also connects to the Twilio API when an order is completed. This send the customer's contact number to the Twilio API, which then sends the customer an SMS to confirm their order is ready to collect.
 
 Twilio integration was easy and fast. It is deactivated for the publicly deployed app as it can only access a limited list of numbers.
+
+## App images
+
+Some renders of the app.
+
+*Index Route:*
+
+![Index](./images/TinyPOS-grab1.png)
+
+*Cart:*
+
+![Cart](./images/TinyPOS-grab2.png) 
+
+*Checkout*
+
+![Checkout](./images/TinyPOS-grab3.png)
+
+*Orders Screen:*
+
+![Orders](./images/TinyPOS-grab4.png)
+
 
 ## Stretch Goals
 

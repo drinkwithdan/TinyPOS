@@ -25,7 +25,7 @@ const CheckoutForm = ({ handleCheckoutSubmit }) => {
 
   return (
     <div className="form-container">
-      <h1>Checkout</h1>
+      <h1 className="form-h1">Checkout</h1>
       <h3>Please input your details:</h3>
       <form onSubmit={handleSubmit}>
         <FormControl fullWidth sx={{ margin: "5px" }} >

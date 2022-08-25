@@ -45,7 +45,7 @@ body {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color:aquamarine; 
+  background-color:palegreen; 
 }
 
 .navbar .left-icon {
@@ -58,7 +58,7 @@ body {
 }
 
 .navbar h1{
-  font-family: "Proxima Nova", sans-serif;
+  font-family: "Dynapuff", sans-serif;
   font-size: 25px;
 }
 
@@ -78,7 +78,7 @@ body {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color:aquamarine; 
+  background-color: palegreen; 
 }
 
 .admin-navbar .left-icon {
@@ -91,7 +91,7 @@ body {
 }
 
 .admin-navbar h1{
-  font-family: "Proxima Nova", sans-serif;
+  font-family: "Dynapuff", sans-serif;
   font-size: 25px;
 }
 
@@ -106,10 +106,10 @@ body {
 
 .logout-button {
   display: flex;
-  border: 1px solid red;
+  border: 1px solid darkslategray;
   background: none;
   border-radius: 3px;
-  color: red;
+  color: darkslategray;
   font-family: inherit;
   font-size: 15px;
   text-decoration: none;
@@ -119,9 +119,9 @@ body {
 
 .login-button {
   display: flex;
-  border: 1px solid green;
+  border: 1px solid darkslategrey;
   border-radius: 3px;
-  color: green;
+  color: darkslategray;
   font-family: inherit;
   font-size: 15px;
   text-decoration: none;
@@ -326,6 +326,10 @@ form {
 
 }
 
+.form-h1 {
+  font-family: "Dynapuff", "Proxima Nova", sans-serif;
+}
+
 .form-container {
   margin: 0 auto;
   width: 90%;
@@ -356,7 +360,7 @@ form {
 .footer {
   text-align: center;
   width: 100%;
-  background-color: aquamarine;
+  background-color:palegreen;
   height: 5rem;
   padding: 3px;
 }
@@ -366,7 +370,7 @@ form {
 }
 
 .orders {
-  background-color: grey;
+  background-color: rgb(60, 60, 60);
   height: 100%;
   width: 100%;
   display: flex;
@@ -385,7 +389,11 @@ form {
 }
 
 .order-rail-title {
-  color: white;
+  text-align: center;
+  color: black;
+  border: 1px solid rgba(0, 206, 209, 0.727);
+  border-radius: 5px;
+  background-color:rgb(92, 235, 237);
   margin: 0 5px;
 }
 
