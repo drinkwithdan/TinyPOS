@@ -14,7 +14,7 @@ import psycopg2
 import os
 from twilio.rest import Client
 
-from .db import get_db, close_db
+from db import get_db, close_db
 
 # # # # # INITIALISING # # # # #
 
