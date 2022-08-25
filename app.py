@@ -332,5 +332,6 @@ def edit_order(id):
 #   return jsonify(deleted_order)
 
 if __name__ == "__main__":
-    app.run()
+  p = int(os.environ.get("PORT", 5000))
+  app.run(debug=True, port=p, host='0.0.0.0')
 
