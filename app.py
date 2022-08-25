@@ -30,8 +30,18 @@ def disconnect_from_db(response):
   close_db()
   return response
 
-# # # # # TWILIO API # # # # #
+# Default route
+@app.route("/")
+def index():
+  return app.send_static_file("index.html")
 
+# React route to index.html
+@app.errorhandler(404)
+def not_found(e):
+  return app.send_static_file("index.html")
+
+
+# # # # # TWILIO API # # # # #
 
 def twilio_SMS(order):
   # # Un-comment below for SMS functionality:
@@ -320,18 +330,6 @@ def edit_order(id):
 #   g.db["connection"].commit()
 #   deleted_order = g.db["cursor"].fetchone()
 #   return jsonify(deleted_order)
-
-# # # # # DEPLOYMENT # # # # #
-
-# Default route
-@app.route("/")
-def index():
-  return app.send_static_file("index.html")
-
-# React route to index.html
-@app.errorhandler(404)
-def not_found(e):
-  return app.send_static_file("index.html")
 
 if __name__ == "__main__":
     app.run()
