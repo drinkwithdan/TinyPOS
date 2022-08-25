@@ -22,6 +22,7 @@ CREATE TABLE orders (
   order_id SERIAL PRIMARY KEY,
   name VARCHAR(255),
   contact INTEGER,
+  total FLOAT,
   status INTEGER DEFAULT 1,
   timestamp TIMESTAMP DEFAULT current_timestamp
 );
@@ -29,6 +30,7 @@ CREATE TABLE orders (
 CREATE TABLE order_items (
   item_id SERIAL REFERENCES items (item_id) ON DELETE CASCADE,
   order_id SERIAL REFERENCES orders (order_id) ON DELETE CASCADE,
+  item_name VARCHAR(255),
   quantity INTEGER
 );
 
