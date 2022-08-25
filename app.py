@@ -324,7 +324,7 @@ def edit_order(id):
 # # # # # DEPLOYMENT # # # # #
 
 # Default route
-app.route("/")
+@app.route("/")
 def index():
   return app.send_static_file("index.html")
 
