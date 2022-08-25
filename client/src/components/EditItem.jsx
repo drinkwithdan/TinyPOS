@@ -25,11 +25,14 @@ const EditItem = ({ products, user, handleLogout, handleEdit }) => {
     })
   }
 
+  let checkboxValue = false
+  if (fields.active === true) checkboxValue = true
+
   return (
     <div className="form-container">
       <AdminNavbar user={user} handleLogout={handleLogout} />
       <div className="form-container">
-      <Link to="/items" className="goto-cart-button">BACK TO ITEMS</Link>
+        <Link to="/items" className="goto-cart-button">BACK TO ITEMS</Link>
         <h3>Edit {item.name}</h3>
         <form onSubmit={handleSubmit}>
           <FormControl fullWidth sx={{ margin: "5px" }} >
@@ -77,7 +80,7 @@ const EditItem = ({ products, user, handleLogout, handleEdit }) => {
             <Checkbox
               id="active"
               onChange={handleChange}
-              value={fields.active}
+              checked={checkboxValue && "checked"}
             />
           </FormControl>
           <Button type="submit" >SAVE CHANGES</Button>

@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 
 const AdminItemCard = ({ item, handleDelete }) => {
@@ -19,7 +18,7 @@ const AdminItemCard = ({ item, handleDelete }) => {
         <div className="card-title">
 
           <div>
-            {item.name}
+            {item.name} ({item.active ? "Active" : "Not active"})
           </div>
 
           <div>
@@ -29,8 +28,6 @@ const AdminItemCard = ({ item, handleDelete }) => {
         </div>
 
         <p>{item.description}</p>
-
-        <p>{item.active ? "Active" : "Not active"}</p>
 
         <div className="card-buttons-container">
 
