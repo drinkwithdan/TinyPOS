@@ -42,6 +42,7 @@ const Login = ({ user, handleLogout, handleLogin }) => {
         </FormControl>
         <Button type="submit">Submit</Button>
         <p>No account? Register <Link to="/users/register">here.</Link></p>
+        <p>Back to <Link to="/home">Customer Site</Link></p>
       </form>
       
     </div>

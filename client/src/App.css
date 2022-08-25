@@ -489,6 +489,10 @@ form {
 }
 
 @media only screen and (min-width: 500px) {
+  .home {
+    margin: 5% 0 0 0;
+  }
+
   .card-container {
     flex-direction: row;
     flex-wrap: wrap;
