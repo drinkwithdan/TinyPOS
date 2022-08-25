@@ -36,6 +36,7 @@ def disconnect_from_db(response):
 def get_items():
   query = """
     SELECT * FROM items
+    ORDER BY item_id ASC
   """
   g.db["cursor"].execute(query)
   items = g.db["cursor"].fetchall()
@@ -197,16 +198,17 @@ def get_orders():
 def new_order():
   name = request.json["name"]
   contact = request.json["contact"]
+  total = request.json["total"]
   items = request.json["items"]
 
   # CREATING NEW ORDER
   query = """
     INSERT INTO orders
-    (name, contact)
-    VALUES (%s, %s)
+    (name, contact, total)
+    VALUES (%s, %s, %s)
     RETURNING *
   """
-  g.db["cursor"].execute(query, (name, contact))
+  g.db["cursor"].execute(query, (name, contact, total))
   g.db["connection"].commit()
   new_order = g.db["cursor"].fetchone()
 
@@ -258,21 +260,32 @@ def new_order():
 #   order_items = g.db["cursor"].fetchall()
 #   return jsonify(order_items)
 
-# # EDIT ORDER "PUT" ROUTE
-# app.route("/orders/edit/<id>", methods=["PUT"])
-# def edit_order(id):
-#   order_id = request.json["order_id"]
-#   status = request.json["status"]
-#   query = """
-#     UPDATE orders
-#     SET status = %s
-#     WHERE orders.order_id = %s
-#     RETURNING *
-#   """
-#   g.db["cursor"].execute(query, (status, order_id))
-#   g.db["connection"].commit()
-#   order = g.db["cursor"].fetchone()
-#   return jsonify(order)
+# EDIT ORDER "PUT" ROUTE
+@app.route("/orders/edit/<id>", methods=["PUT"])
+def edit_order(id):
+  order_id = request.json["order_id"]
+  new_status = request.json["new_status"]
+  print(request.json)
+  query = """
+    UPDATE orders
+    SET status = %s
+    WHERE order_id = %s
+    RETURNING *
+  """
+  g.db["cursor"].execute(query, (new_status, order_id))
+  g.db["connection"].commit()
+  updated_order = g.db["cursor"].fetchone()
+
+  # Fetch order items for this order and append to updated_order
+  query = """
+  SELECT * FROM order_items
+  WHERE order_id = %s
+  """
+  g.db["cursor"].execute(query, (order_id,))
+  order_items = g.db["cursor"].fetchall()
+  updated_order["items"] = order_items
+
+  return jsonify(updated_order)
 
 # # DESTROY ORDER "DELETE" ROUTE
 # app.route("/orders/<id>", methods=["DELETE"])

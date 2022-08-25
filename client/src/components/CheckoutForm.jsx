@@ -5,6 +5,12 @@ import { FormControl, InputLabel, Input, FormHelperText, Button } from "@mui/mat
 const CheckoutForm = ({ handleCheckoutSubmit }) => {
   const [fields, setFields] = useState({})
 
+  const contactLength = 10
+  let notValidContactNumber = false
+  if (fields.telephone) {
+    notValidContactNumber = fields.telephone.length !== contactLength
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault()
     handleCheckoutSubmit(fields)
@@ -23,7 +29,7 @@ const CheckoutForm = ({ handleCheckoutSubmit }) => {
       <h3>Please input your details:</h3>
       <form onSubmit={handleSubmit}>
         <FormControl fullWidth sx={{ margin: "5px" }} >
-          <InputLabel>Name</InputLabel>
+          <InputLabel>First Name</InputLabel>
           <Input 
             id="name" 
             required 
@@ -35,11 +41,12 @@ const CheckoutForm = ({ handleCheckoutSubmit }) => {
           <Input 
             type="number" 
             id="telephone"
+            InputProps={{ inputProps: { max: 10, min: 10 } }}
             required 
             aria-describedby="my-helper-text" 
             onChange={handleChange} 
           />
-          <FormHelperText id="my-helper-text">We need your number to notify you when your order is ready</FormHelperText>
+          <FormHelperText id="my-helper-text">You will receive an SMS when your order is ready. {notValidContactNumber && "(Not a valid mobile number)"} </FormHelperText>
         </FormControl>
         <FormControl fullWidth sx={{ margin: "5px" }}>
           <InputLabel>Address Line 1</InputLabel>

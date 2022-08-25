@@ -13,7 +13,6 @@ const Checkout = ({ cart, handleCheckoutSubmit }) => {
   return (
     <div className="checkout">
       <Navbar cart={cart} />
-      <Header />
       <Elements stripe={stripeTestPromise} >
         <CheckoutForm handleCheckoutSubmit={handleCheckoutSubmit} />
       </Elements>

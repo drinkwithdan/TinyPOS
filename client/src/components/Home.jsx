@@ -10,7 +10,6 @@ const Home = ({ products, cart, addToCart }) => {
   return (
     <div className="home">
       <Navbar cart={cart} />
-      <Header />
       {products ? <ItemList 
         products={products}
         cart={cart} 

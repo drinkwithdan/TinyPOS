@@ -5,7 +5,7 @@ import { OrderRailThree } from "./OrderRailThree"
 import { OrderRailTwo } from "./OrderRailTwo"
 
 const Orders = ({ orders, user, handleLogout, handleOrderStatus }) => {
-  console.log(orders);
+  // console.log(orders);
   return (
     <div className="orders">
       <AdminNavbar user={user} handleLogout={handleLogout} />

@@ -45,7 +45,7 @@ body {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color:darkturquoise; 
+  background-color:aquamarine; 
 }
 
 .navbar .left-icon {
@@ -78,7 +78,7 @@ body {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color:darkturquoise; 
+  background-color:aquamarine; 
 }
 
 .admin-navbar .left-icon {
@@ -136,7 +136,7 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  margin: auto;
+  margin: 5rem auto;
 }
 
 .card-item {
@@ -319,7 +319,7 @@ body {
 }
 
 .checkout {
-  height: 100%;
+  height: 90%;
 }
 
 form {
@@ -357,7 +357,7 @@ form {
 .footer {
   text-align: center;
   width: 100%;
-  background-color: darkturquoise;
+  background-color: aquamarine;
   height: 5rem;
   padding: 3px;
 }
@@ -367,6 +367,7 @@ form {
 }
 
 .orders {
+  background-color: grey;
   height: 100%;
   width: 100%;
   display: flex;
@@ -381,16 +382,27 @@ form {
 .order-rail {
   display: flex;
   width: 100%;
-  height: 20vh;
+  height: 23vh;
+}
+
+.order-rail-title {
+  color: white;
+  margin: 0 5px;
 }
 
 .order-card {
-  color: darkslategray;
+  font-family: 'Helvetica', sans-serif;
+  background-color: white;
+  color: black;
   width: 11rem;
-  border: 1px solid darkslategray;
+  border: 1px solid black;
   border-radius: 3px;
-  margin: 7px;
+  margin: 0 3px;
   padding: 7px;
+}
+
+.collected-container .order-card {
+  height: 12rem;
 }
 
 .order-card ul {
@@ -400,6 +412,18 @@ form {
 
 .order-card li {
   list-style: none;
+}
+
+.order-items-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.order-item {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 
 .order {
@@ -417,8 +441,23 @@ form {
   justify-content: space-between;
 }
 
-.order-title h3 {
+.order-title-name {
+  font-size: 13px;
+}
+
+.order-title-name h3 {
   margin: 0;
+}
+
+.order-title-time {
+  font-size: 12px;
+}
+
+.docket-button {
+  background: none;
+  border: 1px solid black;
+  border-radius: 3px;
+  font-weight: bold;
 }
 
 .spinner {
@@ -427,6 +466,26 @@ form {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.collected-orders {
+  height: 90%;
+  width: 100%;
+  background-color: grey;
+  margin: 10vh 0 0 0;
+}
+
+.collected-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.collected-orders h3 {
+  text-align: center;
+}
+
+.collected-orders .collected-title {
+  color: white;
 }
 
 @media only screen and (min-width: 500px) {

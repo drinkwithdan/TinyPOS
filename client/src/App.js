@@ -11,6 +11,7 @@ import NewItem from "./components/NewItem"
 import Login from "./components/Login"
 import Register from "./components/Register"
 import ProtectedRoute from "./components/ProtectedRoute"
+import CollectedOrders from "./components/CollectedOrders";
 import AdminItems from "./components/AdminItems"
 import EditItem from "./components/EditItem";
 import LoadingSpinner from "./components/LoadingSpinner";
@@ -31,9 +32,8 @@ const App = () => {
   // Set navigate variable
   const navigate = useNavigate()
 
-  // Get access to localStorage
+  // Get access to localStorage cart
   const getLocalCart = JSON.parse(localStorage.getItem("cart"))
-  const getLocalOrders = JSON.parse(localStorage.getItem("orders"))
 
   // // Clears all localStorage
   // localStorage.clear()
@@ -50,15 +50,19 @@ const App = () => {
     getProducts()
   }, [])
 
-  // On mount pull all orders from database
+  // Pull orders and refresh state, on mount and on change
   useEffect(() => {
     const getOrders = async () => {
       const res = await fetch("/orders")
       const data = await res.json()
       setOrders(data)
     }
-    getOrders()
-  }, [])
+    const intervalId = setInterval(() => {
+      getOrders()
+    }, 5000)
+    return () => clearInterval(intervalId)
+    
+  }, [orders])
 
   // On mount check if a local cart exists and set cart state if so
   useEffect(() => {
@@ -66,14 +70,6 @@ const App = () => {
       setCart(getLocalCart)
     }
   }, [])
-
-  // // REDUNDANT?
-  // // On mount check if there are any local orders and populate orders state
-  // useEffect(() => {
-  //   if (orders.length === 0 && getLocalOrders !== null) {
-  //     setOrders(getLocalOrders)
-  //   }
-  // }, [])
 
   // On mount check if user is logged in
   useEffect(() => {
@@ -178,8 +174,8 @@ const App = () => {
 
   // // // // // ORDERS CRUD RESTFUL ROUTES // // // // //
 
+  // New order POST on successful checkout
   const handleNewOrder = async (newOrder) => {
-    console.log("Fired")
     const res = await fetch("/orders/new", {
       method: "POST",
       headers: {
@@ -188,12 +184,30 @@ const App = () => {
       body: JSON.stringify(newOrder)
     })
     const data = await res.json()
-    console.log(data);
+    console.log(data)
     return data
   }
 
   const handleOrderStatus = async (order_id, newStatus) => {
-    console.log("Change order", order_id, "to status", newStatus);
+    console.log("Change order", order_id, "to status", newStatus)
+    const res = await fetch(`/orders/edit/${order_id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ order_id: order_id, new_status: newStatus })
+    })
+    const updatedOrder = await res.json()
+    console.log(updatedOrder);
+    const index = orders.indexOf(orders.find((order) => order.order_id === updatedOrder.order_id))
+    console.log(index);
+    const newOrders = [
+      ...orders.slice(0, index),
+      updatedOrder,
+      ...orders.slice(index + 1)
+    ]
+    console.log(newOrders);
+    setOrders(newOrders)
   }
 
 
@@ -245,7 +259,6 @@ const App = () => {
     // Sets the cart state with the new updated array
     localStorage.setItem("cart", JSON.stringify({ items: newCartItems, ...totals }))
     setCart({ items: newCartItems, ...totals })
-    console.log(getLocalCart);
   }
 
   // Take form from checkout and append items to orders state
@@ -255,12 +268,14 @@ const App = () => {
     const newOrder = {
       name: form.name,
       contact: form.telephone,
-      items: [...cart.items] 
+      total: cart.subTotal,
+      items: [...cart.items]
     }
     const returnedOrder = handleNewOrder(newOrder)
     const newOrders = [...orders]
     newOrders.push(returnedOrder)
     setOrders(newOrders)
+
 
     // Empty cart and localStorage
     localStorage.removeItem("cart")
@@ -350,6 +365,17 @@ const App = () => {
         <Route path="/orders" element={
           <ProtectedRoute user={user} >
             <Orders
+              orders={orders}
+              user={user}
+              handleLogout={handleLogout}
+              handleOrderStatus={handleOrderStatus}
+            />
+          </ProtectedRoute>
+        } />
+
+        <Route path="/orders/collected" element={
+          <ProtectedRoute user={user} >
+            <CollectedOrders
               orders={orders}
               user={user}
               handleLogout={handleLogout}

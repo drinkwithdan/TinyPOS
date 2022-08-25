@@ -18,7 +18,7 @@ const AdminItems = ({products, user, handleLogout, handleDelete}) => {
     <div className="itemlist">
       <AdminNavbar user={user} handleLogout={handleLogout} />
       <div className="card-container">
-        <h2>Current Products:</h2>
+        <Link to="/orders" className="goto-cart-button">VIEW ORDERS</Link>
         <Link to="/items/new" className="goto-cart-button">ADD NEW ITEM</Link>
         {products ? itemsList : <LoadingSpinner />}
       </div>
