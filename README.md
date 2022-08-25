@@ -218,4 +218,7 @@ As the app was developed for mobile view it loses some visual appeal on larger s
 #### Full POS services
 The checkout features are basically a mockup, I would like to develop these out into a fully functioning payment screen which processes electronic payment and saves the daily transactions into a Data-analysis table - allowing easy viewing of sales data across daily, weekly or monthly time periods. Possibly the introduction of a `till` route which displays the current completed orders and facilitates cash payments.
 
+#### Input validation
+More thorough user input validation is required for both the checkout and admin-edit routes. Currently the checkout form is more of a mockup, with limited enforcement of telephone, address and card details. I would like more logic on the form before it is accepted, perhaps with flash messages back to the user where fields are incorrect or the wrong format.
+
 There are many other features I would like to implement onto this project. Hopefully I will find the time!

@@ -46,21 +46,21 @@ def not_found(e):
 def twilio_SMS(order):
   # # Un-comment below for SMS functionality:
 
-  # customer_number = order["contact"]
-  # formatted_number = f"+61{customer_number}"
-  # account_sid = os.environ["TWILIO_ACCOUNT_SID"]
-  # auth_token = os.environ["TWILIO_AUTH_TOKEN"]
-  # twilio_number=os.environ["TWILIO_NUMBER"]
-  # client = Client(account_sid, auth_token)
+  customer_number = order["contact"]
+  formatted_number = f"+61{customer_number}"
+  account_sid = os.environ["TWILIO_ACCOUNT_SID"]
+  auth_token = os.environ["TWILIO_AUTH_TOKEN"]
+  twilio_number=os.environ["TWILIO_NUMBER"]
+  client = Client(account_sid, auth_token)
 
-  # message = client.messages \
-  #               .create(
-  #                    body="Your Tiny Tacos order is ready for collection!",
-  #                    from_=twilio_number,
-  #                    to=formatted_number
-  #                )
+  message = client.messages \
+                .create(
+                     body="Your Tiny Tacos order is ready for collection!",
+                     from_=twilio_number,
+                     to=formatted_number
+                 )
 
-  # print(message.sid)
+  print(message.sid)
 
   # # End commented section
   print("Message sent to customer")

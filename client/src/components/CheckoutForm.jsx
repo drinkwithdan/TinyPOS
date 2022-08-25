@@ -39,9 +39,9 @@ const CheckoutForm = ({ handleCheckoutSubmit }) => {
         <FormControl fullWidth sx={{ margin: "5px" }}>
           <InputLabel>Contact Number</InputLabel>
           <Input 
-            type="number" 
+            type="tel" 
             id="telephone"
-            InputProps={{ inputProps: { max: 10, min: 10 } }}
+            inputProps={{minLength: 10, maxLength: 10}}
             required 
             aria-describedby="my-helper-text" 
             onChange={handleChange} 

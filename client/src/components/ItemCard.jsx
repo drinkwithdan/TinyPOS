@@ -27,7 +27,7 @@ const ItemCard = ({ item, cart, addToCart }) => {
     // Call addToCart function (in App.js), passed through props
     } else if (event.target.name === "add" && counter > 0) {
       addToCart(item, counter)
-      setCounter(0)
+      setCounter(1)
     }
   }
 
