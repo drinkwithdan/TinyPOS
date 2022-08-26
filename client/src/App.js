@@ -327,7 +327,7 @@ const App = () => {
         />
 
         {/* Successful checkout route */}
-        <Route path="/success" element={<Success cart={cart} />} />
+        <Route path="/success" element={orders ? <Success cart={cart} orders={orders} /> : <LoadingSpinner />} />
         
         {/* New user register route */}
         <Route path="/users/register" element={<Register

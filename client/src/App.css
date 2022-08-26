@@ -106,11 +106,12 @@ body {
 
 .logout-button {
   display: flex;
-  border: 1px solid darkslategray;
+  border: 2px solid darkslategray;
   background: none;
   border-radius: 3px;
   color: darkslategray;
   font-family: inherit;
+  font-weight: bold;
   font-size: 15px;
   text-decoration: none;
   align-items: center;
@@ -119,10 +120,11 @@ body {
 
 .login-button {
   display: flex;
-  border: 1px solid darkslategrey;
+  border: 2px solid darkslategrey;
   border-radius: 3px;
   color: darkslategray;
   font-family: inherit;
+  font-weight: bold;
   font-size: 15px;
   text-decoration: none;
   align-items: center;
@@ -350,6 +352,10 @@ form {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+}
+.order-received {
+  width: 80%;
+  text-align: center;
 }
 
 .order-message {

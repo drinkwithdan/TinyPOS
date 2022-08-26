@@ -213,7 +213,7 @@ Integrated with the above would be the ability for the customer to selected cert
 The option to render the customer or Back Of House screen using a more accessible font such as [Dyslexie](https://www.dyslexiefont.com/) or adding different styling options for the Back Of House orders screen, such as a dark background, to improve accessible reading.
 
 #### Better large-screen rendering
-As the app was developed for mobile view it loses some visual appeal on larger screens. Given more time I would polish the CSS for larger `media-queries` so larger screens render in a more standardised layout.
+As the app was developed for mobile view it loses some visual appeal on larger screens. Given more time I would polish the CSS for larger `media-queries` so larger screens render in a more standardised layout. I also wanted to add a "order progress" icon on the customer "Order Success" which tracks the status of the order moving through the Back Of House order rails, so the Customer can see how close to completion the order it.
 
 #### Full POS services
 The checkout features are basically a mockup, I would like to develop these out into a fully functioning payment screen which processes electronic payment and saves the daily transactions into a Data-analysis table - allowing easy viewing of sales data across daily, weekly or monthly time periods. Possibly the introduction of a `till` route which displays the current completed orders and facilitates cash payments.
