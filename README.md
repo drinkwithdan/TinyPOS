@@ -184,11 +184,11 @@ Some renders of the app.
 
 *Index Route:*
 
-![Index](./images/TinyPOS-grab1.png)
+![Index](./images/TinyPOS-Cards.png)
 
 *Cart:*
 
-![Cart](./images/TinyPOS-grab2.png) 
+![Cart](./images/TinyPOS-Cart.png) 
 
 *Checkout*
 
@@ -196,7 +196,7 @@ Some renders of the app.
 
 *Orders Screen:*
 
-![Orders](./images/TinyPOS-grab4.png)
+![Orders](./images/TinyPOS-Orders.png)
 
 
 ## Stretch Goals

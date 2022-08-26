@@ -2,6 +2,7 @@ import Navbar from "./Navbar"
 import Header from "./Header"
 import Footer from "./Footer"
 import CheckBoxIcon from "@mui/icons-material/CheckBox"
+import LoadingSpinner from "./LoadingSpinner"
 
 const Success = ({ cart, orders }) => {
 
@@ -13,7 +14,7 @@ const Success = ({ cart, orders }) => {
       <Header />
       <div className="order-received">
         <h1 className="form-h1">Order received!</h1>
-        <h3>You order will be ready in approximately {ordersInFront.length * 2} minutes. </h3>
+        {orders.length ? <h3>You order will be ready in approximately {ordersInFront.length * 2} minutes. </h3> : <LoadingSpinner /> }
       </div>
       <div className="order-tick">
         <CheckBoxIcon variant="outline" color="success" sx={{ fontSize: 60 }} />
