@@ -22,7 +22,7 @@ Dependencies (Python API):
 
 Dependencies (React JS):
 - react-router-dom
-- @mui/material (+@emotion/react, @emotion/styled)
+- @mui/material (+@emotion/react, +@emotion/styled)
 - @stripe/stripe-js (+@stripe/react-stripe-js)
 
 ##### Installation
