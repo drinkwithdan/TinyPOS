@@ -90,7 +90,7 @@ The initial design process was to figure out the `Models, Views, Controllers` se
 
 An Entity Relationship Diagram was sketched out in order to understand the database tables required and the relationships between them:
 
-![ERD diagram](./images/tinyPOS-ERD.jpeg)
+![ERD diagrams](./images/tinyPOS-ERD.jpeg)
 
 A separate table, orders_items would be needed to manage the many-to-many relationship between the orders and items; as both items and orders could be linked to multiple of each other.
 
