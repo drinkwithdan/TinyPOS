@@ -1,6 +1,8 @@
 # TinyPOS
 ### A Point-Of-Sale system for micro catering businesses
 
+A live version of the app can be found [here](https://tinypos-app.herokuapp.com/) - please read the "viewing the app" section below.
+
 TinyPOS is a full-stack webapp designed to democratise Point-Of-Sale software for small businesses that can't afford the pricing and features of large industry POS providers.
 
 Customers can access the shop-front site through the base route, and admin can log in through a discreet link in the footer - or with a direct link to the login page.
@@ -42,8 +44,6 @@ Once the above are set up you can run the `seed/run.sql` file in the root folder
 Happy hacking!
 
 ##### Viewing the app
-
-A live version of the app can be found [here](https://tinypos-app.herokuapp.com/)
 
 To access the admin route please user the demo account (username: demo, password: password)
 
