@@ -102,7 +102,7 @@ Some wireframes were drawn up in Miro to draft some basic UI, in order to plan o
 
 ![Mobile first customer view](./images/Tinypos-CustWire.png)
 
-The routes for the mobile app were developed to be as simple as possible, with as few clicks as possible to get to checkout. In the end JavaScript `localStorage` functionality was used to store cart data instead of a login route for all customers. This saves the customer having to set up an account to purchase items - increasing the likelihood of a sale.
+The routes for the mobile app were developed to be as simple as possible, with as few clicks as possible to get to checkout. In the end JavaScript `localStorage` functionality was used to store cart data instead of a login route for all customers. This saves the customer having to set up an account to purchase items, increasing the likelihood of a sale.
 
 Buttons and clickable items were designed to be as large as possible, without looking cumbersome - following the mobile-first design principle.
 
